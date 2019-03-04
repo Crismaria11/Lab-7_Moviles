@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,13 +37,13 @@ class MainActivity : AppCompatActivity() {
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.setHasFixedSize(true)
 
-        var adapter = NoteAdapter()
+        var adapter = ContactAdapter()
 
         recycler_view.adapter = adapter
 
-        noteViewModel = ViewModelProviders.of(this).get(NoteViewModel::class.java)
+        contactViewModel = ViewModelProviders.of(this).get(contactViewModel::class.java)
 
-        noteViewModel.getAllNotes().observe(this, Observer<List<Note>> {
+        contactViewModel.getAllContacts().observe(this, Observer<List<Contact>> {
             adapter.submitList(it)
         })
 
@@ -56,21 +57,22 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                noteViewModel.delete(adapter.getNoteAt(viewHolder.adapterPosition))
-                Toast.makeText(baseContext, "Note Deleted!", Toast.LENGTH_SHORT).show()
+                contactViewModel.delete(adapter.getContactAt(viewHolder.adapterPosition))
+                Toast.makeText(baseContext, "Contact Deleted!", Toast.LENGTH_SHORT).show()
             }
         }
         ).attachToRecyclerView(recycler_view)
 
-        adapter.setOnItemClickListener(object : NoteAdapter.OnItemClickListener {
-            override fun onItemClick(note: Note) {
-                var intent = Intent(baseContext, AddEditNoteActivity::class.java)
-                intent.putExtra(AddEditNoteActivity.EXTRA_ID, note.id)
-                intent.putExtra(AddEditNoteActivity.EXTRA_TITLE, note.title)
-                intent.putExtra(AddEditNoteActivity.EXTRA_DESCRIPTION, note.description)
-                intent.putExtra(AddEditNoteActivity.EXTRA_PRIORITY, note.priority)
+        adapter.setOnItemClickListener(object : ContactAdapter.OnItemClickListener {
+            override fun onItemClick(contact: Contact) {
+                var intent = Intent(baseContext, AddEditContactActivity::class.java)
+                intent.putExtra(AddEditContactActivity.EXTRA_ID, contact.id)
+                intent.putExtra(AddEditContactActivity.EXTRA_NAME, contact.name)
+                intent.putExtra(AddEditContactActivity.EXTRA_EMAIL, contact.email)
+                intent.putExtra(AddEditContactActivity.EXTRA_PHONENUMBER, contact.phoneNumber)
+                intent.putExtra(AddEditContactActivity.EXTRA_PRIORITY, contact.priority)
 
-                startActivityForResult(intent, EDIT_NOTE_REQUEST)
+                startActivityForResult(intent, EDIT_CONTACT_REQUEST)
             }
         })
     }
@@ -82,9 +84,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
-            R.id.delete_all_notes -> {
-                noteViewModel.deleteAllNotes()
-                Toast.makeText(this, "All notes deleted!", Toast.LENGTH_SHORT).show()
+            R.id.delete_all_contacts -> {
+                contactViewModel.deleteAllContacts()
+                Toast.makeText(this, "All contacts deleted!", Toast.LENGTH_SHORT).show()
                 true
             }
             else -> {
@@ -96,32 +98,34 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == ADD_NOTE_REQUEST && resultCode == Activity.RESULT_OK) {
-            val newNote = Note(
-                data!!.getStringExtra(AddEditNoteActivity.EXTRA_TITLE),
-                data.getStringExtra(AddEditNoteActivity.EXTRA_DESCRIPTION),
-                data.getIntExtra(AddEditNoteActivity.EXTRA_PRIORITY, 1)
+        if (requestCode == ADD_CONTACT_REQUEST && resultCode == Activity.RESULT_OK) {
+            val newContact = Contact(
+                data!!.getStringExtra(AddEditContactActivity.EXTRA_NAME),
+                data.getStringExtra(AddEditContactActivity.EXTRA_EMAIL),
+                data.getIntExtra(AddEditContactActivity.EXTRA_PHONENUMBER),
+                data.getIntExtra(AddEditContactActivity.EXTRA_PRIORITY, 1)
             )
-            noteViewModel.insert(newNote)
+            contactViewModel.insert(newContact)
 
-            Toast.makeText(this, "Note saved!", Toast.LENGTH_SHORT).show()
-        } else if (requestCode == EDIT_NOTE_REQUEST && resultCode == Activity.RESULT_OK) {
-            val id = data?.getIntExtra(AddEditNoteActivity.EXTRA_ID, -1)
+            Toast.makeText(this, "Contact saved!", Toast.LENGTH_SHORT).show()
+        } else if (requestCode == EDIT_CONTACT_REQUEST && resultCode == Activity.RESULT_OK) {
+            val id = data?.getIntExtra(AddEditContactActivity.EXTRA_ID, -1)
 
             if (id == -1) {
                 Toast.makeText(this, "Could not update! Error!", Toast.LENGTH_SHORT).show()
             }
 
-            val updateNote = Note(
-                data!!.getStringExtra(AddEditNoteActivity.EXTRA_TITLE),
-                data.getStringExtra(AddEditNoteActivity.EXTRA_DESCRIPTION),
-                data.getIntExtra(AddEditNoteActivity.EXTRA_PRIORITY, 1)
+            val updateContact = Contact(
+                data!!.getStringExtra(AddEditContactActivity.EXTRA_NAME),
+                data.getStringExtra(AddEditContactActivity.EXTRA_EMAIL),
+                data.getIntExtra(AddEditContactActivity.EXTRA_PHONENUMBER),
+                data.getIntExtra(AddEditContactActivity.EXTRA_PRIORITY, 1)
             )
-            updateNote.id = data.getIntExtra(AddEditNoteActivity.EXTRA_ID, -1)
-            noteViewModel.update(updateNote)
+            updateContact.id = data.getIntExtra(AddEditContactActivity.EXTRA_ID, -1)
+            contactViewModel.update(updateContact)
 
         } else {
-            Toast.makeText(this, "Note not saved!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Contact not saved!", Toast.LENGTH_SHORT).show()
         }
 
 

@@ -45,12 +45,12 @@ abstract class ContactDatabase : RoomDatabase() {
     }
 
     class PopulateDbAsyncTask(db: ContactDatabase?) : AsyncTask<Unit, Unit, Unit>() {
-        private val noteDao = db?.contactInt()
+        private val contactInt = db?.contactInt()
 
         override fun doInBackground(vararg p0: Unit?) {
-            noteDao?.insert(Contact("Nombre1", "nombre1@gmail.com", 12345678, 1))
-            noteDao?.insert(Contact("Nombre2", "nombre2@gmail.com", 87654321, 2))
-            noteDao?.insert(Contact("Nombre3", "nombre3@gmail.com", 13578642, 3))
+            contactInt?.insert(Contact("Nombre1", "nombre1@gmail.com", 12345678, 1))
+            contactInt?.insert(Contact("Nombre2", "nombre2@gmail.com", 87654321, 2))
+            contactInt?.insert(Contact("Nombre3", "nombre3@gmail.com", 13578642, 3))
         }
     }
 

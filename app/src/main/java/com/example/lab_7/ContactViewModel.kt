@@ -9,23 +9,23 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
         ContactRepository(application)
     private var allContact: LiveData<List<Contact>> = repository.getAllContacts()
 
-    fun insert(note: Contact) {
-        repository.insert(note)
+    fun insert(contact: Contact) {
+        repository.insert(contact)
     }
 
-    fun update(note: Contact) {
-        repository.update(note)
+    fun update(contact: Contact) {
+        repository.update(contact)
     }
 
-    fun delete(note: Contact) {
-        repository.delete(note)
+    fun delete(contact: Contact) {
+        repository.delete(contact)
     }
 
-    fun deleteAllNotes() {
+    fun deleteAllContacts() {
         repository.deleteAllContacts()
     }
 
-    fun getAllNotes(): LiveData<List<Contact>> {
+    fun getAllContacts(): LiveData<List<Contact>> {
         return allContact
     }
 }

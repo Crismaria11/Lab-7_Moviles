@@ -29,7 +29,7 @@
                 android:layout_toStartOf="@id/text_view_priority"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Title"
+                android:text="Name"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
         <TextView
@@ -37,7 +37,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_view_name"
-                android:text="Description"/>
+                android:text="Email"/>
+
+        <TextView
+                android:id="@+id/text_view_phoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_name"
+                android:text="Phone Number"/>
 
     </RelativeLayout>
 

@@ -28,25 +28,25 @@ class AddEditContactActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
 
         if (intent.hasExtra(EXTRA_ID)) {
-            name = "Edit Contact"
+            title = "Edit Contact"
             edit_text_name.setText(intent.getStringExtra(EXTRA_NAME))
             edit_text_email.setText(intent.getStringExtra(EXTRA_EMAIL))
             edit_text_phoneNumber.setText(intent.getStringExtra(EXTRA_PHONENUMBER))
             number_picker_priority.value = intent.getIntExtra(EXTRA_PRIORITY, 1)
         } else {
-            name = "Add Contact"
+            title = "Add Contact"
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.add_note_menu, menu)
+        menuInflater.inflate(R.menu.add_contact_menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
-            R.id.save_note -> {
-                saveNote()
+            R.id.save_contact -> {
+                saveContact()
                 true
             }
 
@@ -54,15 +54,16 @@ class AddEditContactActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveNote() {
-        if (edit_text_title.text.toString().trim().isBlank() || edit_text_description.text.toString().trim().isBlank()) {
-            Toast.makeText(this, "Can not insert empty note!", Toast.LENGTH_SHORT).show()
+    private fun saveContact() {
+        if (edit_text_name.text.toString().trim().isBlank() || edit_text_email.text.toString().trim().isBlank() || edit_text_phoneNumber.text.toString().trim().isBlank()) {
+            Toast.makeText(this, "Can not insert empty contact!", Toast.LENGTH_SHORT).show()
             return
         }
 
         val data = Intent().apply {
-            putExtra(EXTRA_TITLE, edit_text_title.text.toString())
-            putExtra(EXTRA_DESCRIPTION, edit_text_description.text.toString())
+            putExtra(EXTRA_NAME, edit_text_name.text.toString())
+            putExtra(EXTRA_EMAIL, edit_text_email.text.toString())
+            putExtra(EXTRA_PHONENUMBER, edit_text_phoneNumber.text.toString())
             putExtra(EXTRA_PRIORITY, number_picker_priority.value)
             if (intent.getIntExtra(EXTRA_ID, -1) != -1) {
                 putExtra(EXTRA_ID, intent.getIntExtra(EXTRA_ID, -1))
