@@ -7,18 +7,18 @@ import androidx.room.*
 interface ContactInt {
 
     @Insert
-    fun insert(note: Contact)
+    fun insert(contact: Contact)
 
     @Update
-    fun update(note: Contact)
+    fun update(contact: Contact)
 
     @Delete
-    fun delete(note: Contact)
+    fun delete(contact: Contact)
 
     @Query("DELETE FROM contact_table")
-    fun deleteAllNotes()
+    fun deleteAllContacts()
 
     @Query("SELECT * FROM contact_table ORDER BY priority DESC")
-    fun getAllNotes(): LiveData<List<Contact>>
+    fun getAllContacts(): LiveData<List<Contact>>
 
 }

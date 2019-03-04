@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.contact_item.view.*
 
-class ContactAdapter : ListAdapter<Contact, ContactAdapter.NoteHolder>(DIFF_CALLBACK) {
+class ContactAdapter : ListAdapter<Contact, ContactAdapter.ContactHolder>(DIFF_CALLBACK) {
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Contact>() {
@@ -18,7 +18,8 @@ class ContactAdapter : ListAdapter<Contact, ContactAdapter.NoteHolder>(DIFF_CALL
             }
 
             override fun areContentsTheSame(oldItem: Contact, newItem: Contact): Boolean {
-                return oldItem.name == newItem.name && oldItem.email == newItem.email
+                return oldItem.name == newItem.name
+                        && oldItem.email == newItem.email
                         && oldItem.phoneNumber == newItem.phoneNumber
                         && oldItem.priority == newItem.priority
             }
@@ -27,25 +28,25 @@ class ContactAdapter : ListAdapter<Contact, ContactAdapter.NoteHolder>(DIFF_CALL
 
     private var listener: OnItemClickListener? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolder {
         val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.contact_item, parent, false)
-        return NoteHolder(itemView)
+        return ContactHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: NoteHolder, position: Int) {
-        val currentNote: Contact = getItem(position)
+    override fun onBindViewHolder(holder: ContactHolder, position: Int) {
+        val currentContact: Contact = getItem(position)
 
-        holder.textViewName.text = currentNote.name
-        holder.textViewPriority.text = currentNote.priority.toString()
-        holder.textViewEmail.text = currentNote.email
-        holder.textViewPhoneNumber.text = currentNote.phoneNumber
+        holder.textViewName.text = currentContact.name
+        holder.textViewPriority.text = currentContact.priority.toString()
+        holder.textViewEmail.text = currentContact.email
+        holder.textViewPhoneNumber.text = currentContact.phoneNumber.toString()
     }
 
-    fun getNoteAt(position: Int): Contact {
+    fun getContactAt(position: Int): Contact {
         return getItem(position)
     }
 
-    inner class NoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ContactHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener {
                 val position = adapterPosition
@@ -55,13 +56,14 @@ class ContactAdapter : ListAdapter<Contact, ContactAdapter.NoteHolder>(DIFF_CALL
             }
         }
 
-        var textViewTitle: TextView = itemView.text_view_name
+        var textViewName: TextView = itemView.text_view_name
         var textViewPriority: TextView = itemView.text_view_priority
-        var textViewDescription: TextView = itemView.text_view_email
+        var textViewEmail: TextView = itemView.text_view_email
+        var textViewPhoneNumber: TextView = itemView.text_view_phoneNumber
     }
 
     interface OnItemClickListener {
-        fun onItemClick(note: Contact)
+        fun onItemClick(contact: Contact)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {

@@ -8,69 +8,69 @@ class ContactRepository(application: Application) {
 
     private var contactInt: ContactInt
 
-    private var allNotes: LiveData<List<Contact>>
+    private var allContacts: LiveData<List<Contact>>
 
     init {
         val database: ContactDatabase = ContactDatabase.getInstance(
             application.applicationContext
         )!!
         contactInt = database.contactInt()
-        allNotes = contactInt.getAllNotes()
+        allContacts = contactInt.getAllContacts()
     }
 
-    fun insert(note: Contact) {
-        val insertNoteAsyncTask = InsertNoteAsyncTask(contactInt).execute(note)
+    fun insert(contact: Contact) {
+        val insertContactAsyncTask = InsertContactAsyncTask(contactInt).execute(contact)
     }
 
-    fun update(note: Contact) {
-        val updateNoteAsyncTask = UpdateNoteAsyncTask(contactInt).execute(note)
+    fun update(contact: Contact) {
+        val updateContactAsyncTask = UpdateContactAsyncTask(contactInt).execute(contact)
     }
 
 
-    fun delete(note: Contact) {
-        val deleteNoteAsyncTask = DeleteNoteAsyncTask(contactInt).execute(note)
+    fun delete(contact: Contact) {
+        val deleteContactAsyncTask = DeleteContactAsyncTask(contactInt).execute(contact)
     }
 
-    fun deleteAllNotes() {
-        val deleteAllNotesAsyncTask = DeleteAllNotesAsyncTask(
+    fun deleteAllContacts() {
+        val deleteAllContactsAsyncTask = DeleteAllContactsAsyncTask(
             contactInt
         ).execute()
     }
 
-    fun getAllNotes(): LiveData<List<Contact>> {
-        return allNotes
+    fun getAllContacts(): LiveData<List<Contact>> {
+        return allContacts
     }
 
     companion object {
-        private class InsertNoteAsyncTask(noteDao: ContactInt) : AsyncTask<Contact, Unit, Unit>() {
-            val noteDao = noteDao
+        private class InsertContactAsyncTask(contactInt: ContactInt) : AsyncTask<Contact, Unit, Unit>() {
+            val contactInt = contactInt
 
             override fun doInBackground(vararg p0: Contact?) {
-                noteDao.insert(p0[0]!!)
+                contactInt.insert(p0[0]!!)
             }
         }
 
-        private class UpdateNoteAsyncTask(noteDao: ContactInt) : AsyncTask<Contact, Unit, Unit>() {
-            val noteDao = noteDao
+        private class UpdateContactAsyncTask(contactInt: ContactInt) : AsyncTask<Contact, Unit, Unit>() {
+            val contactInt = contactInt
 
             override fun doInBackground(vararg p0: Contact?) {
-                noteDao.update(p0[0]!!)
+                contactInt.update(p0[0]!!)
             }
         }
 
-        private class DeleteNoteAsyncTask(noteDao: ContactInt) : AsyncTask<Contact, Unit, Unit>() {
-            val noteDao = noteDao
+        private class DeleteContactAsyncTask(contactInt: ContactInt) : AsyncTask<Contact, Unit, Unit>() {
+            val contactInt = contactInt
 
             override fun doInBackground(vararg p0: Contact?) {
-                noteDao.delete(p0[0]!!)
+                contactInt.delete(p0[0]!!)
             }
         }
 
-        private class DeleteAllNotesAsyncTask(noteDao: ContactInt) : AsyncTask<Unit, Unit, Unit>() {
-            val noteDao = noteDao
+        private class DeleteAllContactsAsyncTask(contactInt: ContactInt) : AsyncTask<Unit, Unit, Unit>() {
+            val contactInt = contactInt
 
             override fun doInBackground(vararg p0: Unit?) {
-                noteDao.deleteAllNotes()
+                contactInt.deleteAllContacts()
             }
         }
     }
