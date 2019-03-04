@@ -1,3 +1,7 @@
+/*
+Cristina Bautista
+Esta es la clase que donde se maneja la funciones de la base de datos de ContactDatabase
+ */
 package com.example.lab_7
 
 import android.app.Application

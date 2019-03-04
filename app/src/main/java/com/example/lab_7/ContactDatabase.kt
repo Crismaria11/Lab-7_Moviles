@@ -1,3 +1,8 @@
+/*
+Cristina Bautista
+Esta es la clase es la que contiene la base de datos de todos los contactos
+con su respectiva informacion
+ */
 package com.example.lab_7
 
 import android.content.Context

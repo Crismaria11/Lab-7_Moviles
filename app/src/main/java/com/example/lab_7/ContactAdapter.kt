@@ -1,3 +1,7 @@
+/*
+Cristina Bautista
+Esta clase es para que todos los contactos esten bien organizados y si se tocan vayan a editarse
+ */
 package com.example.lab_7
 
 import android.view.LayoutInflater

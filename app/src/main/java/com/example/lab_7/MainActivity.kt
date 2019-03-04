@@ -1,3 +1,8 @@
+/*
+Cristina Bautista
+Este es el main activity de la aplicacion
+donde muestra la lista de contactos con la informacion y el nivel de prioridad
+ */
 package com.example.lab_7
 
 import android.app.Activity

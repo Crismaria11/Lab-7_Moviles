@@ -1,3 +1,7 @@
+/*
+Cristina Bautista
+Esta es la interfaz que contiene todas las acciones para los contactos
+ */
 package com.example.lab_7
 
 import androidx.lifecycle.LiveData

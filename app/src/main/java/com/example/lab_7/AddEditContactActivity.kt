@@ -1,3 +1,7 @@
+/*
+Cristina Bautista
+Esta es la clase de la actividad para editar los contactos
+ */
 package com.example.lab_7
 
 import android.app.Activity

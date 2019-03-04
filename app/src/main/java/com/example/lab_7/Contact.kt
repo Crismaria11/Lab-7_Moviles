@@ -1,3 +1,7 @@
+/*
+Cristina Bautista
+Esta es la clase que define que es lo que tiene el contacto
+ */
 package com.example.lab_7
 
 import androidx.room.Entity
