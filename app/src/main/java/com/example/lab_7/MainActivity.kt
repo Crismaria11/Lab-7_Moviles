@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         recycler_view.adapter = adapter
 
-        contactViewModel = ViewModelProviders.of(this).get(contactViewModel::class.java)
+        contactViewModel = ViewModelProviders.of(this).get(ContactViewModel::class.java)
 
         contactViewModel.getAllContacts().observe(this, Observer<List<Contact>> {
             adapter.submitList(it)
@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
             val newContact = Contact(
                 data!!.getStringExtra(AddEditContactActivity.EXTRA_NAME),
                 data.getStringExtra(AddEditContactActivity.EXTRA_EMAIL),
-                data.getIntExtra(AddEditContactActivity.EXTRA_PHONENUMBER),
+                data.getIntExtra(AddEditContactActivity.EXTRA_PHONENUMBER, 1),
                 data.getIntExtra(AddEditContactActivity.EXTRA_PRIORITY, 1)
             )
             contactViewModel.insert(newContact)
@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
             val updateContact = Contact(
                 data!!.getStringExtra(AddEditContactActivity.EXTRA_NAME),
                 data.getStringExtra(AddEditContactActivity.EXTRA_EMAIL),
-                data.getIntExtra(AddEditContactActivity.EXTRA_PHONENUMBER),
+                data.getIntExtra(AddEditContactActivity.EXTRA_PHONENUMBER,1),
                 data.getIntExtra(AddEditContactActivity.EXTRA_PRIORITY, 1)
             )
             updateContact.id = data.getIntExtra(AddEditContactActivity.EXTRA_ID, -1)
